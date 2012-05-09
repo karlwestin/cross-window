@@ -6,25 +6,36 @@
 </head>
 <body>
 <script>
-var testWin = openPopUp();
 
-function openPopUp() {
-    var url = "popup.html";
-    popupWin = window.open ("", "popupWin", "width=400,heigh=500");
+function TestRunner(url) {
+    var runner = this; // oldschool for iE 7 & 8
 
-    if( !popupWin || popupWin.closed || !popupWin.doSomething ) {
-        popupWin = window.open( url, "popupWin", "width=500,height=400" );
-    } else popupWin.focus();
+    this.iframe = document.createElement("iframe");
+    this.iframe.src = url;
 
-    setTimeout(function() {
-        popupWin.doSomething();
-    }, 200);
-    return popupWin;
-}
+    document.body.appendChild(this.iframe);
 
-function getMessage(message) {
-    console.log(message);
-}
+    this.iframe.onload = function() {
+        this.contentWindow.RunJasmine(runner);
+    }
+};
+
+TestRunner.prototype = {
+
+    destroy: function() {
+        document.body.removeChild(this.iframe);
+    },
+
+    postResult: function(mess) {
+        console.log(mess);
+        this.destroy();
+    }
+
+};
+
+new TestRunner("popup.html");
+
+
 </script>
 </body>
 </html>
