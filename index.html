@@ -1,33 +1,30 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
 	<title></title>
-	<meta name="description" content="">
-	<meta name="author" content="">
-
-	<meta name="viewport" content="width=device-width">
-
-	<link rel="stylesheet" href="css/style.css">
-
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<script>window.html5 || document.write('<script src="js/libs/html5.js"><\/script>')</script>
-	<![endif]-->
 </head>
 <body>
-<header>
+<script>
+var testWin = openPopUp();
 
-</header>
-<div role="main">
+function openPopUp() {
+    var url = "popup.html";
+    popupWin = window.open ("", "popupWin", "width=400,heigh=500");
 
-</div>
-<footer>
+    if( !popupWin || popupWin.closed || !popupWin.doSomething ) {
+        popupWin = window.open( url, "popupWin", "width=500,height=400" );
+    } else popupWin.focus();
 
-</footer>
+    setTimeout(function() {
+        popupWin.doSomething();
+    }, 200);
+    return popupWin;
+}
 
-<script src="js/script.js"></script>
+function getMessage(message) {
+    console.log(message);
+}
+</script>
 </body>
 </html>
